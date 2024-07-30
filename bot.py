@@ -1,5 +1,5 @@
 # This example requires the 'message_content' intent.
-import responses as resp
+import commands as comm
 import os
 from discord import Message, Intents, Client
 from dotenv import load_dotenv
@@ -20,7 +20,7 @@ async def send_message(message: Message, user_message: str) -> None: # Send mess
     if not user_message or user_message[:1] != '^':
         return
     try:
-        response = resp.get_response(user_message)
+        response = comm.get_response(user_message)
         await message.channel.send(response)
     except Exception as e:
         print(e)
