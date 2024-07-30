@@ -1,4 +1,4 @@
 # Clearborne
 
-Discord bot for viewing PSN profiles, playtimes and progress across games.
-WIP
+A Python-based Discord bot for viewing PSN profiles, playtimes and progress across games.
+Currently WIP!
