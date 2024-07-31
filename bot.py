@@ -1,7 +1,7 @@
 # This example requires the 'message_content' intent.
-import commands as comm
+import commands
 import os
-from discord import Message, Intents, Client
+from discord import Message, Intents, Client, Embed
 from dotenv import load_dotenv
 
 # TOKEN is stored in .env
@@ -20,8 +20,8 @@ async def send_message(message: Message, user_message: str) -> None: # Send mess
     if not user_message or user_message[:1] != '^':
         return
     try:
-        response = comm.get_response(user_message)
-        await message.channel.send(response)
+        response = commands.get_response(user_message)
+        await message.channel.send(embed=response)
     except Exception as e:
         print(e)
          
