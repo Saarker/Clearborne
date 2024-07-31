@@ -1,6 +1,6 @@
 from psnawp_api import PSNAWP, core
 from dotenv import load_dotenv
-from discord import Embed
+from disnake import Embed
 from datetime import datetime
 import os
 

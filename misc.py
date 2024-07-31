@@ -1,7 +1,5 @@
-from discord import Embed
+from disnake import Embed
 
-def help(input: str) -> dict:
-    embedDict = {"description": "^help: List of commands\n^lookup [online_id]: Lookup a PSN user\n",
-                 "type": "rich"}
-    embed = Embed.from_dict(embedDict)
+def help() -> dict:
+    embed = Embed(description="/help: List of commands\n/lookup [online_id]: Lookup a PSN user\n")
     return embed 

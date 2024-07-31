@@ -1,45 +1,41 @@
 # This example requires the 'message_content' intent.
-import commands
 import os
-from discord import Message, Intents, Client, Embed
+from disnake import Message, Intents, Client, Embed
+from disnake.ext import commands
 from dotenv import load_dotenv
+import profiles, misc
 
 # TOKEN is stored in .env
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+bot = commands.Bot()
 
-# BOT SETUP
-intents = Intents.default()
-intents.message_content = True
-client = Client(intents=intents)
-
-# BOT EVENTS
-async def on_ready(): # When bot is ready
-    print(f'{client.user} has connected to Discord!')
-async def send_message(message: Message, user_message: str) -> None: # Send message to channel
-    if not user_message or user_message[:1] != '^':
-        return
-    try:
-        response = commands.get_response(user_message)
-        await message.channel.send(embed=response)
-    except Exception as e:
-        print(e)
-         
-# BOT STARTUP
-@client.event
+@bot.event      # bot is online
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')
-         
-# HANDLING MESSAGES
-@client.event
-async def on_message(message: Message):
-    if message.author == client.user:
-        return
-    await send_message(message, message.content)
+    print(f'{bot.user} has connected to Discord!')
+    
+@bot.slash_command(
+    name="help",
+    description="List of commands and their respective uses"
+)
+async def help(inter):
+    await inter.response.defer()
+    await inter.edit_original_response(embed=misc.help())
+    
+@bot.slash_command(
+    name="lookup",
+    description="Lookup a PSN user"
+)
+async def lookup(inter, online_id: str):
+    await inter.response.defer()
+    await inter.edit_original_response(embed=profiles.lookup(online_id))
             
+
+
 # RUN BOT
 def main() -> None:
-    client.run(token=TOKEN)
-
+    bot.run(token=TOKEN)
+    
 if __name__ == '__main__':
     main()
+

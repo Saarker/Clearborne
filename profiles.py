@@ -1,6 +1,6 @@
 from psnawp_api import PSNAWP, core
 from dotenv import load_dotenv
-from discord import Embed, Color
+from disnake import Embed, Color
 from datetime import datetime
 import os
 
@@ -64,3 +64,4 @@ def lookup(input: str) -> dict:
         embed = Embed()
         embed.description = "Something went wrong. Please try again."
         return embed
+
