@@ -8,7 +8,7 @@ import profiles, misc
 # TOKEN is stored in .env
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-bot = commands.Bot()
+bot = commands.InteractionBot()
 
 @bot.event      # bot is online
 async def on_ready():

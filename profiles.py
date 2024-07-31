@@ -26,29 +26,18 @@ def lookup(input: str) -> dict:
         thumbnailDict = profileDict[1]["url"]   
         embed.set_thumbnail(url=thumbnailDict)
         
-        titles = user.title_stats()
+        titles = user.title_stats(limit=5)
         sorted_titles = sorted(titles, key=lambda x: x.last_played_date_time, reverse=True)
-        if len(sorted_titles) >= 5:
-            embed.description += "\n\n**Recently Played Games:**"
-        else:
-            raise IndexError
-        for i in range(5):
-            embed.add_field(name=sorted_titles[i].name,
-                            value=f"Last Played {str(datetime.now().astimezone() - sorted_titles[i].last_played_date_time)} ago\nTotal Playtime: {sorted_titles[i].play_duration}",
+        if len(sorted_titles) == 0:
+            return embed
+        embed.description += "\n\n**Recently Played Games:**"
+        for title in sorted_titles:
+            embed.add_field(name=title.name,
+                            value=f"Last Played {str(datetime.now().astimezone() - title.last_played_date_time)} ago\nTotal Playtime: {title.play_duration}",
                             inline=False) 
         sorted_titles.clear()
         return embed
     
-    except IndexError:
-        if sorted_titles:
-            embed.description += "\n\n**Recently Played Games:**"
-        for title in sorted_titles:
-            embed.add_field(name=title.name,
-                            value=f"Last Played {str(datetime.now().astimezone() - title.last_played_date_time)} ago\nTotal Playtime: {title.play_duration}",
-                            inline=False)
-        sorted_titles.clear()
-        return embed
-
     except core.PSNAWPNotFound:
         embed = Embed()
         embed.description = "User not found. Please try looking up an existing user."
